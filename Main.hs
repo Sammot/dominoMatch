@@ -4,4 +4,4 @@ module Main where
     main :: IO ()
     main = do
         print("A game will be played between the two players defined in DomsMatch.hs")
-        print(domsMatch 1000 7 61 smartPlayer simplePlayer 2340)
+        print(domsMatch 1000 7 61 simplePlayer smartPlayer 2340)
