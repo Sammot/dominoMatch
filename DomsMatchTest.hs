@@ -383,56 +383,6 @@ module DomsMatchTest where
         -- strategies calculations: lazy evaluation for storing the results
         winningPlay = winningDomino h b (getScore s p) targetScore :: Maybe (Domino, End)
 
-
-    -- params: self's hand, the board state, the set of all dominoes, and the self player
-    -- returns: the play most likely to block the opponent player
-    -- blockingPlay' :: Hand -> Board -> [Domino] -> Player -> (Domino, End)
-    -- blockingPlay' hand board dominoSet player = blockingPlay''
-    --   where
-    --     blockingDoms = blockingDominos hand board dominoSet player :: [(Int, Hand)]
-
-    --     -- a list of pip values (most to least likely to block the opponent) with their associated dominoes from the hand,
-    --     -- with each side the domino can be played on to achieve that pip value.
-    --     blockingPipPlays = map (\(p, hs) -> (p, map (\d -> (d, canPlayWithPip p board d)) hs)) blockingDoms :: [(Int, [(Domino, (Bool, Bool))])]
-    --     -- foldr will preserve the ordering of the individual domino subsets (important)
-    --     blockingPipPlaysFlattened = foldr (\(p, ds) acc -> (foldr (\(d, (l, r)) acc -> (p, d, l, r):acc) [] ds) ++ acc) [] blockingPipPlays :: [(Int, Domino, Bool, Bool)]
-    --     -- find the first one that is legal to play
-    --     blockingPlay'' = whichSide (head (dropWhile (\(p, d, l, r) -> not (l || r)) blockingPipPlaysFlattened)) :: (Domino, End)
-
-    --     whichSide :: (Int, Domino, Bool, Bool) -> (Domino, End)
-    --     whichSide (_, d, l, r)  -- Play the side that is most likely to block the player
-    --       | l /= r = if l then (d, L) else (d, R)
-    --       | otherwise = (d, end)
-    --         where
-    --           (Just board'l) = playDom player d board L
-    --           (Just board'r) = playDom player d board R
-    --           playedLeft_rightPips = snd (rightDom board'l) :: Int
-    --           playedRight_leftPips = fst (leftDom board'r)  :: Int
-
-    --           -- for each side you could play, what is the likelihood of the opposite end's pip value blocking the opponent
-    --           (pr_lp_commonality, pl_rp_commonality) = (common playedRight_leftPips, common playedLeft_rightPips)
-    --             where common pip = indexWhere (\(p, d, l, r) -> p == pip) blockingPipPlaysFlattened :: Int -- the list is sorted
-    --           end = if pl_rp_commonality < pr_lp_commonality then L else R :: End
-
-    --     -- params: a hand, a board state, the set of every possible domino, and the self player
-    --     -- returns: a list of pairs, where each pair is a pip value and the subset of dominoes from the hand that COULD produce that value on the outside of the board
-    --     -- sorted by the pip value most likely to block the opponent to the least likely
-    --     blockingDominos :: Hand -> Board -> [Domino] -> Player -> [(Int, Hand)]
-    --     blockingDominos hand board dominoSet p = likelyBlockingPlays
-    --       where
-    --         -- score = length ((possibleResponsePlays h b d L p domSet) ++ (possibleResponsePlays h b d R p domSet))
-
-    --         oppDoms = opponentsPossibleDominoes hand board dominoSet p :: Hand -- the dominos thought to be in the opponents hand
-    --         oppPips = foldr (\(l, r) acc -> l:r:acc) [] oppDoms :: [Int] -- The pip values thought to be in the opponent's hand
-    --         selfPips = removeCopies (foldr (\(l, r) acc -> l:r:acc) [] hand) :: [Int] -- the unique pip values in my hand
-
-    --         -- how many times each unique pip in my hand appears in the opponent's estimated hand, sorted least to most: (value, commonality)
-    --         pipCommonality = sortBy (\(_, o1) (_, o2) -> compare o1 o2) (map (\p -> (p, occurances p oppPips)) selfPips) :: [(Int, Int)]
-            
-    --         -- pairs off each pip value with the subset of dominoes from the hand that COULD produce that value on the outside of the board
-    --         likelyBlockingPlays = map (\(pip, occ) -> (pip, (filter (\(l, r) -> (l == pip) || (r == pip)) hand))) pipCommonality :: [(Int, Hand)]
-
-
     simplePlayer_BestDom :: DomsPlayer
     simplePlayer_BestDom [] InitState _ _     = error "No board, no hand = nothing game"
     simplePlayer_BestDom [] (State _ _ _) _ _ = error "Cannot play a domino with no hand"
