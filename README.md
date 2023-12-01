@@ -6,7 +6,7 @@ This program simulates a match of 5s and 3s dominoes, and includes two players -
 
 It can be best demonstrated in the GHCi REPL as below:
 
-```haskell
+```bash
 ghci> :load DomsMatch.hs
 ...
 ghci> domsMatch <amount of games> <hand size> <winning score> simplePlayer smartPlayer <random seed value>
