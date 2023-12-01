@@ -5,7 +5,6 @@ I completed this piece of work for COM2108, a module in which I studied the func
 This program simulates a match of 5s and 3s dominoes, and includes two players - one that randomly plays dominoes and one that employs multiple intelligent strategies to win.
 
 It can be best demonstrated in the GHCi REPL as below:
-
 ```bash
 ghci> :load DomsMatch.hs
 ...
@@ -15,5 +14,7 @@ ghci> domsMatch 1000 7 61 simplePlayer smartPlayer 4325
 ```
 
 The output of `domsMatch` will be the wins for each player, you can also pit two of the same player against each other, though that would just mean equal wins.
+
+You may also load `DomsMatchTest.hs` for different versions of the smart and simple players with varying strategies. All are prefixed with `smartPlayer_` or `simplePlayer_` and can be navigated using GHCi's tab autocompletion.
 
 Compiling and running `Main.hs` will play a game similar to above (but a bit more performant).
